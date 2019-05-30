@@ -1,0 +1,27 @@
+PODS:
+  - Alamofire (4.8.1)
+  - AlamofireCoreData (2.0.0):
+    - Alamofire (~> 4.7)
+    - Groot (~> 3.0)
+  - Groot (3.0.1):
+    - Groot/Swift (= 3.0.1)
+  - Groot/Swift (3.0.1)
+
+DEPENDENCIES:
+  - Alamofire (~> 4.0)
+  - AlamofireCoreData
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - AlamofireCoreData
+    - Groot
+
+SPEC CHECKSUMS:
+  Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
+  AlamofireCoreData: 3205949bd789c2aa5e1cd8f4d703631c9d7ba09c
+  Groot: a668afbcf0be88d76c0a26c714cfa4638ceaca66
+
+PODFILE CHECKSUM: 641f19359f56fe8309b6623b0e0e9a737935ab53
+
+COCOAPODS: 1.6.1
