@@ -12,8 +12,9 @@ class UsersService {
     
     let userProvider: DataProvider
     let userTasksProvider: UserTasksProvider = UserTasksProvider()
+    
     // MARK: - singleton instance
-    static let sharedInstance = UsersService(userProvider: DataProvider())
+    static let shared = UsersService(userProvider: DataProvider())
     
     private init(userProvider: DataProvider) {
         self.userProvider = userProvider
@@ -22,17 +23,18 @@ class UsersService {
     lazy var manager = NetworkReachabilityManager(host: "jsonplaceholder.typicode.com")
     
     // MARK: - Load Informations From users WebService
-    func loadUsers(completionHandler:@escaping (Bool, [Users.utilisateur]?) -> ()) {
+    func loadUsers(completionHandler:@escaping (Bool, [Users.user]?) -> ()) {
         
+        //var users = [Users.user]()
         Alamofire.request(Constants.usersListUrl, encoding: URLEncoding.default)
             .responseJSON { response in
-                var users = [Users.utilisateur]()
+                
                 switch response.result {
                 case .success:
                     print("@@@@@@ case Success")
                     if let result = response.data {
                         do {
-                            users = try JSONDecoder().decode([Users.utilisateur].self, from: result)
+                            let users = try JSONDecoder().decode([Users.user].self, from: result)
                             print("array of users ==== ", users)
                             
 //                            self.userProvider.save(users: users, completion: { state in
@@ -64,18 +66,19 @@ class UsersService {
     }
     
     // 
-    func loadTasksUser(userId: Int, completionHandler:@escaping (Bool, [Tasks]?) -> ()) {
+    func loadTasksUser(userId: Int, completionHandler:@escaping (Bool, [Task]?) -> ()) {
         
         let url = Constants.tasksListUrl + "\(userId)"
+        
         Alamofire.request(url, encoding: URLEncoding.default)
             .responseJSON { response in
-                var tasks = [Tasks]()
+
                 switch response.result {
                 case .success:
                     print("@@@@@@ case Success")
                     if let result = response.data {
                         do {
-                            tasks = try JSONDecoder().decode([Tasks].self, from: result)
+                            let tasks = try JSONDecoder().decode([Task].self, from: result)
                             print("array of users ==== ", tasks)
                             
 //                            self.userTasksProvider.saveTasks(userId: userId,tasks: tasks, completion: { state in

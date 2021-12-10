@@ -8,12 +8,12 @@
 import Foundation
 
 struct TasksKeys {
-    static let ClassKey    = "TasksData"
+    static let ClassKey = "TasksData"
 }
 
 class UserTasksProvider {
     
-    var tasks: [Tasks]!
+    var tasks: [Task]!
     
 //    init(userId: Int) {
 //        self.fetchTasks(userId: userId)
@@ -23,7 +23,7 @@ class UserTasksProvider {
     func fetchTasks(userId: Int)  {
         
         if let data = UserDefaults.standard.object(forKey: TasksKeys.ClassKey) as? Dictionary<String, Any> {
-            let userTasks = NSKeyedUnarchiver.unarchiveObject(with: data["\(userId)"] as! Data) as! [Tasks]
+            let userTasks = NSKeyedUnarchiver.unarchiveObject(with: data["\(userId)"] as! Data) as! [Task]
             for task in userTasks {
                 if task.userId == userId{
                     tasks.append(task)
@@ -34,7 +34,7 @@ class UserTasksProvider {
     }
     
     // MARK: - Saving information
-    func saveTasks(userId: Int, tasks: [Tasks], completion: (Bool) -> Void) {
+    func saveTasks(userId: Int, tasks: [Task], completion: (Bool) -> Void) {
         
         let dic = ["\(userId)": tasks]
         let data = NSKeyedArchiver.archivedData(withRootObject: dic)

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -29,6 +29,8 @@
 		8DF4C577229EE3FC00627776 /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF4C576229EE3FC00627776 /* TaskModel.swift */; };
 		8DF4C579229FDBE700627776 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF4C578229FDBE700627776 /* DataProvider.swift */; };
 		8DF4C57B229FE76900627776 /* UserTasksProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF4C57A229FE76900627776 /* UserTasksProvider.swift */; };
+		A4578F8527633EEB009F5127 /* ReusableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4578F8427633EEB009F5127 /* ReusableCell.swift */; };
+		A4578F8727633F23009F5127 /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4578F8627633F23009F5127 /* NibLoadable.swift */; };
 		E354DFC8B5D29B6035E88D3D /* Pods_UserTasksTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F7895C18B965DCEF44A317D /* Pods_UserTasksTests.framework */; };
 		F88D58BF9D68BC17E1C1CDF6 /* Pods_UserTasks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A17A55C038EF1FAC1C501A7 /* Pods_UserTasks.framework */; };
 /* End PBXBuildFile section */
@@ -84,6 +86,8 @@
 		8DF4C576229EE3FC00627776 /* TaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
 		8DF4C578229FDBE700627776 /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
 		8DF4C57A229FE76900627776 /* UserTasksProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTasksProvider.swift; sourceTree = "<group>"; };
+		A4578F8427633EEB009F5127 /* ReusableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableCell.swift; sourceTree = "<group>"; };
+		A4578F8627633F23009F5127 /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
 		A78DB81F428CFC4A6B843332 /* Pods-UserTasksTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UserTasksTests.debug.xcconfig"; path = "Target Support Files/Pods-UserTasksTests/Pods-UserTasksTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BD08D133C52BA9CC52CFA9F0 /* Pods-UserTasksTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UserTasksTests.release.xcconfig"; path = "Target Support Files/Pods-UserTasksTests/Pods-UserTasksTests.release.xcconfig"; sourceTree = "<group>"; };
 		D97C4A5A4362032F88FEB693 /* Pods-UserTasksUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UserTasksUITests.debug.xcconfig"; path = "Target Support Files/Pods-UserTasksUITests/Pods-UserTasksUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -152,6 +156,9 @@
 		8D9F6ABB229D63940073377B /* UserTasks */ = {
 			isa = PBXGroup;
 			children = (
+				8D9F6B15229D686B0073377B /* Constants.swift */,
+				A4578F8427633EEB009F5127 /* ReusableCell.swift */,
+				A4578F8627633F23009F5127 /* NibLoadable.swift */,
 				8DF4C57F22A010EA00627776 /* DataProvider */,
 				8DF4C57E22A010B200627776 /* Model */,
 				8DF4C57D22A010AC00627776 /* Services */,
@@ -162,7 +169,6 @@
 				8D9F6AC3229D63960073377B /* Assets.xcassets */,
 				8D9F6AC5229D63960073377B /* LaunchScreen.storyboard */,
 				8D9F6AC8229D63960073377B /* Info.plist */,
-				8D9F6B15229D686B0073377B /* Constants.swift */,
 			);
 			path = UserTasks;
 			sourceTree = "<group>";
@@ -455,20 +461,11 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-UserTasks/Pods-UserTasks-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/AlamofireCoreData/AlamofireCoreData.framework",
-				"${BUILT_PRODUCTS_DIR}/Groot/Groot.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-UserTasks/Pods-UserTasks-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireCoreData.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Groot.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-UserTasks/Pods-UserTasks-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -513,9 +510,11 @@
 				8D9F6B1A229E922A0073377B /* UsersService.swift in Sources */,
 				8DF4C579229FDBE700627776 /* DataProvider.swift in Sources */,
 				8D9F6B13229D68390073377B /* TasksListCell.swift in Sources */,
+				A4578F8727633F23009F5127 /* NibLoadable.swift in Sources */,
 				8D9F6B0F229D68280073377B /* UsersListCell.swift in Sources */,
 				8D9F6B16229D686B0073377B /* Constants.swift in Sources */,
 				8D9F6B18229E91FA0073377B /* UserModel.swift in Sources */,
+				A4578F8527633EEB009F5127 /* ReusableCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

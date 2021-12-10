@@ -7,25 +7,18 @@
 
 import UIKit
 
-class TasksListCell: UITableViewCell {
-
+class TasksListCell: UITableViewCell, ConfigurableCell {
+    typealias T = Task
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var viewStatus: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
         self.viewStatus.layer.cornerRadius = CGFloat(self.viewStatus.bounds.width)/2.0
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
     
-    func fill(item: Tasks) {
-        //
+    func configureCell(with item: Task) {
         self.titleLabel.text = item.title
         if item.status {
             viewStatus.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
@@ -33,6 +26,5 @@ class TasksListCell: UITableViewCell {
         else{
             viewStatus.backgroundColor = #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1)
         }
-
     }
 }

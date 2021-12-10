@@ -7,8 +7,9 @@
 
 import UIKit
 
-class UsersListCell: UITableViewCell {
-
+class UsersListCell: UITableViewCell, ConfigurableCell {
+    typealias T = Users.user
+    
     // MARK: - Variables
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
@@ -16,17 +17,9 @@ class UsersListCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
-    func fill(item: Users.utilisateur) {
-        //
+    func configureCell(with item: Users.user) {
         self.nameLabel.text = item.name!
         self.usernameLabel.text = "@" + item.username!
         self.emailLabel.text = item.email!

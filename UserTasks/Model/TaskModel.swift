@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Tasks: Decodable {
+struct Task: Decodable {
     var id: Int
     var userId: Int
     var title: String

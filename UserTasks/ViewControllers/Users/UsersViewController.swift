@@ -16,42 +16,30 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var loader: UIActivityIndicatorView!
     
     let userProvider = DataProvider()
-    var users : [Users.utilisateur]?
-    
-    // MARK: - Initialization
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
-    {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-  
-    required init?(coder aDecoder: NSCoder)
-    {
-        super.init(coder: aDecoder)
-    }
-  
+    var users: [Users.user]?
     
     // MARK: - View lifecycle
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.navigationController?.isNavigationBarHidden = false
-        self.title = "Liste des utilisateurs"
-        self.loader.startAnimating()
+        self.title = "Utilisateurs"
+
+        tableView.register(UsersListCell.nib, forCellReuseIdentifier: UsersListCell.reuseIdentifier)
+        
         self.loadUsers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(animated)
         if let index = self.tableView.indexPathForSelectedRow{
             self.tableView.deselectRow(at: index, animated: true)
         }
-        self.loadUsers()
     }
     
     func loadUsers() {
-        if UsersService.sharedInstance.isNetworkReachable() {
-            UsersService.sharedInstance.loadUsers { (success, users) in
-                print("Success")
+        self.loader.startAnimating()
+        if UsersService.shared.isNetworkReachable() {
+            UsersService.shared.loadUsers { (success, users) in
                 self.users = users
                 self.tableView.isHidden = false
                 self.loader.stopAnimating()
@@ -59,6 +47,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
         }
         else{
+            self.loader.stopAnimating()
             self.users = userProvider.users
             self.tableView.isHidden = false
             self.tableView.reloadData()
@@ -76,34 +65,23 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.users != nil, (self.users?.count)! > 0 {
-            return self.users!.count
-        }
-        return 0
+        return users?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        var cell : UsersListCell
-        if  let c = tableView.dequeueReusableCell(withIdentifier: "UsersListCell") as? UsersListCell{
-            cell = c
-        }else{
-            let nib = Bundle.main.loadNibNamed("UsersListCell", owner: self, options: nil)! as NSArray
-            cell = nib[0] as! UsersListCell
-        }
 
-        cell.fill(item: (self.users?[indexPath.row])!)
+        let cell = tableView.dequeueReusableCell(withIdentifier: UsersListCell.reuseIdentifier) as! UsersListCell
+        cell.configureCell(with: (self.users?[indexPath.row])!)
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let controller = TasksViewController(nibName: "TasksViewController", bundle: nil)
-        if self.users?[indexPath.row] != nil {
-            controller.userDetail((self.users?[indexPath.row])!)
+        let taskController = TasksViewController(nibName: "TasksViewController", bundle: nil)
+        if let user = self.users?[indexPath.row] {
+            taskController.userDetail(user)
         }
-        
-        self.navigationController?.pushViewController(controller, animated: true)
+        self.navigationController?.pushViewController(taskController, animated: true)
     }
 }
 

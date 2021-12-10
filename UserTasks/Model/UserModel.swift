@@ -10,11 +10,10 @@ import Foundation
 enum Users {
     
     struct List: Codable {
-        var users: [utilisateur]?
-        
+        var users: [user]?
     }
     
-    struct utilisateur: Codable {
+    struct user: Codable {
         var id: Int?
         var name: String?
         var username: String?

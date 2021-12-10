@@ -8,12 +8,12 @@
 import Foundation
 
 struct UserTasksKeys {
-    static let ClassKey    = "UsersData"
+    static let ClassKey = "UsersData"
 }
 
 class DataProvider {
     
-    var users: [Users.utilisateur]!
+    var users: [Users.user]!
     
     init() {
         self.fetchData()
@@ -25,12 +25,12 @@ class DataProvider {
         if let data = UserDefaults.standard.object(forKey: UserTasksKeys.ClassKey) {
             //users = NSKeyedUnarchiver.unarchiveObject(with: data as! Data) as? [Users.utilisateur]
             
-            users = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data as! Data) as? [Users.utilisateur]
+            users = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data as! Data) as? [Users.user]
         }
     }
     
     // MARK: - Saving information
-    func save(users: [Users.utilisateur], completion: (Bool) -> Void) {
+    func save(users: [Users.user], completion: (Bool) -> Void) {
         
         //let data = NSKeyedArchiver.archivedData(withRootObject: users)
         do {

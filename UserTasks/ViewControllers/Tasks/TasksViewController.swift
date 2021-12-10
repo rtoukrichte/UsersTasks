@@ -18,41 +18,27 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var loader: UIActivityIndicatorView!
     
     let taskProvider = DataProvider()
-    var tasks : [Tasks]?
-    var user : Users.utilisateur?
-    
-    // MARK: - Initialization
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
-    {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-  
-    required init?(coder aDecoder: NSCoder)
-    {
-        super.init(coder: aDecoder)
-    }
-  
+    var tasks : [Task]?
+    var user : Users.user?
     
     // MARK: - View lifecycle
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.navigationController?.isNavigationBarHidden = false
-        self.title = "Mes Tâches"
-        self.loader.startAnimating()
-        self.loadUserTasks()
+        self.title = "Tâches de \(user?.name ?? "")"
+
+        tableView.register(TasksListCell.nib, forCellReuseIdentifier: TasksListCell.reuseIdentifier)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.loadUserTasks()
-       
     }
     
     func loadUserTasks() {
-        if UsersService.sharedInstance.isNetworkReachable() {
-            UsersService.sharedInstance.loadTasksUser(userId: (self.user?.id)!) { (success, tasks) in
-                print("Success")
+        self.loader.startAnimating()
+        if UsersService.shared.isNetworkReachable() {
+            UsersService.shared.loadTasksUser(userId: (self.user?.id)!) { (success, tasks) in
                 self.tasks = tasks
                 self.tableView.isHidden = false
                 self.loader.stopAnimating()
@@ -61,6 +47,7 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
         else{
             //self.tasks = taskProvider.tasks
+            self.loader.stopAnimating()
             self.tableView.isHidden = false
             self.tableView.reloadData()
         }
@@ -68,7 +55,7 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
 
     // MARK: - Get object User
-    func userDetail(_ user: Users.utilisateur) {
+    func userDetail(_ user: Users.user) {
         self.user = user
     }
     
@@ -82,22 +69,14 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.tasks != nil, (self.tasks?.count)! > 0 {
-            return self.tasks!.count
-        }
-        return 0
+        return tasks?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell : TasksListCell
-        if  let c = tableView.dequeueReusableCell(withIdentifier: "TasksListCell") as? TasksListCell{
-            cell = c
-        }else{
-            let nib = Bundle.main.loadNibNamed("TasksListCell", owner: self, options: nil)! as NSArray
-            cell = nib[0] as! TasksListCell
-        }
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: TasksListCell.reuseIdentifier) as! TasksListCell
         
-        cell.fill(item: (self.tasks?[indexPath.row])!)
+        cell.configureCell(with: (self.tasks?[indexPath.row])!)
         return cell
     }
 

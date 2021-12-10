@@ -14,18 +14,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        
-//        window = UIWindow(frame: UIScreen.main.bounds)
-//        window?.backgroundColor = UIColor.white
-//        let usersVC = UsersViewController(nibName: "UsersViewController", bundle: nil)
-//        window?.rootViewController = usersVC
-//        window?.makeKeyAndVisible()
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        let mainController = UsersViewController() as UIViewController
+        let mainController = UsersViewController() as UsersViewController
         let navigationController = UINavigationController(rootViewController: mainController)
         navigationController.navigationBar.isTranslucent = false
+        navigationController.navigationBar.isHidden = false
+        navigationController.navigationBar.tintColor = UIColor.red
+        navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.red]
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
         
