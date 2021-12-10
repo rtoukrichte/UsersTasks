@@ -37,9 +37,9 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func loadUserTasks() {
         self.loader.startAnimating()
-        if UsersService.shared.isNetworkReachable() {
-            UsersService.shared.loadTasksUser(userId: (self.user?.id)!) { (success, tasks) in
-                self.tasks = tasks
+        if UserService.shared.isNetworkReachable() {
+            UserService.shared.loadTasksUser(userId: (self.user?.id)!) { (success, tasks) in
+                self.tasks = tasks!
                 self.tableView.isHidden = false
                 self.loader.stopAnimating()
                 self.tableView.reloadData()
@@ -75,8 +75,9 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: TasksListCell.reuseIdentifier) as! TasksListCell
-        
-        cell.configureCell(with: (self.tasks?[indexPath.row])!)
+        if let task = self.tasks?[indexPath.row] {
+            cell.configureCell(with: task)
+        }
         return cell
     }
 

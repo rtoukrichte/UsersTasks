@@ -7,8 +7,16 @@
 
 import Foundation
 
-class Constants {
+struct Constants {
     static let baseUrl      = "https://jsonplaceholder.typicode.com"
     static let usersListUrl = Constants.baseUrl + "/users/"
     static let tasksListUrl = Constants.baseUrl + "/todos?userId="
+}
+
+var GlobalMainQueue: DispatchQueue {
+    return DispatchQueue.main
+}
+
+var GlobalBackgroundQueue: DispatchQueue {
+    return DispatchQueue.global(qos: DispatchQoS.QoSClass.background)
 }

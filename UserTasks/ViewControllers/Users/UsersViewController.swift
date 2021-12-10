@@ -38,8 +38,8 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func loadUsers() {
         self.loader.startAnimating()
-        if UsersService.shared.isNetworkReachable() {
-            UsersService.shared.loadUsers { (success, users) in
+        if UserService.shared.isNetworkReachable() {
+            UserService.shared.loadUsers { (success, users) in
                 self.users = users
                 self.tableView.isHidden = false
                 self.loader.stopAnimating()

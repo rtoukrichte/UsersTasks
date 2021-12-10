@@ -2,19 +2,20 @@
 //  UsersService.swift
 //  UserTasks
 //
-//  Created by Nabil EL KHADDARI on 29/05/2019.
+//  Created by Rida TOUKRICHTE on 29/05/2019.
 //
 
 import Foundation
 import Alamofire
 
-class UsersService {
+
+class UserService {
     
     let userProvider: DataProvider
     let userTasksProvider: UserTasksProvider = UserTasksProvider()
     
     // MARK: - singleton instance
-    static let shared = UsersService(userProvider: DataProvider())
+    static let shared = UserService(userProvider: DataProvider())
     
     private init(userProvider: DataProvider) {
         self.userProvider = userProvider
@@ -42,9 +43,10 @@ class UsersService {
 //                                    return
 //                                }
 //                                print("users saved successfully")
-//                                completionHandler(true, users)
-//
 //                            })
+//                            GlobalBackgroundQueue.async {
+//                                //CoreDataManager.shared.saveUsers(items: users)
+//                            }
                             
                             completionHandler(true, users)
                         }
@@ -108,6 +110,7 @@ class UsersService {
                 }
         }
     }
+    
     // MARK: - Network Reachability
     func isNetworkReachable() -> Bool {
         return manager?.isReachable ?? false
