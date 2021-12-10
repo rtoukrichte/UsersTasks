@@ -17,17 +17,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         let mainController = UsersViewController() as UsersViewController
         let navigationController = UINavigationController(rootViewController: mainController)
-        navigationController.navigationBar.isTranslucent = false
-        navigationController.navigationBar.isHidden = false
-        navigationController.navigationBar.tintColor = UIColor.red
-        navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.red]
-        
+        setupNavigationBar(navigationController: navigationController)
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
         
         return true
     }
 
+    func setupNavigationBar(navigationController: UINavigationController) {
+        
+        navigationController.navigationBar.isTranslucent = false
+        navigationController.navigationBar.isHidden = false
+        navigationController.navigationBar.tintColor = UIColor.red
+        navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.red]
+        
+        navigationController.navigationBar.layer.masksToBounds = false
+        navigationController.navigationBar.layer.shadowColor = UIColor.lightGray.cgColor
+        navigationController.navigationBar.layer.shadowOpacity = 0.9
+        navigationController.navigationBar.layer.shadowOffset = CGSize(width: 0, height: 1.0)
+        navigationController.navigationBar.layer.shadowRadius = 4
+
+    }
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.

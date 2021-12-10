@@ -15,6 +15,8 @@ class TasksListCell: UITableViewCell, ConfigurableCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.backgroundColor = .clear
+        self.selectionStyle = .none
         self.viewStatus.layer.cornerRadius = CGFloat(self.viewStatus.bounds.width)/2.0
     }
     

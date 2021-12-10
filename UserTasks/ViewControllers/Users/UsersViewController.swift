@@ -14,6 +14,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loader: UIActivityIndicatorView!
+    @IBOutlet weak var lblError: UILabel!
     
     let userProvider = DataProvider()
     var users: [Users.user]?
@@ -22,7 +23,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.title = "Utilisateurs"
+        self.title = "Users"
 
         tableView.register(UsersListCell.nib, forCellReuseIdentifier: UsersListCell.reuseIdentifier)
         
@@ -31,15 +32,20 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let index = self.tableView.indexPathForSelectedRow{
-            self.tableView.deselectRow(at: index, animated: true)
-        }
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
     
     func loadUsers() {
         self.loader.startAnimating()
         if UserService.shared.isNetworkReachable() {
             UserService.shared.loadUsers { (success, users) in
+                guard success, users != nil else {
+                    self.lblError.isHidden = false
+                    self.tableView.isHidden = true
+                    self.loader.stopAnimating()
+                    self.lblError.text = "Data not available, try later"
+                    return
+                }
                 self.users = users
                 self.tableView.isHidden = false
                 self.loader.stopAnimating()
@@ -47,10 +53,12 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
         }
         else{
+            self.lblError.isHidden = false
             self.loader.stopAnimating()
-            self.users = userProvider.users
-            self.tableView.isHidden = false
-            self.tableView.reloadData()
+            self.tableView.isHidden = true
+//            self.users = userProvider.users
+//            self.tableView.reloadData()
+            self.lblError.text = "Please check your connection network"
         }
         
     }

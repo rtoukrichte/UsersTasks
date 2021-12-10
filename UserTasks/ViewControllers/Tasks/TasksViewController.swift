@@ -25,7 +25,7 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.title = "Tâches de \(user?.name ?? "")"
+        self.title = "\(user?.name ?? "")'s tasks"
 
         tableView.register(TasksListCell.nib, forCellReuseIdentifier: TasksListCell.reuseIdentifier)
     }
@@ -39,10 +39,13 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.loader.startAnimating()
         if UserService.shared.isNetworkReachable() {
             UserService.shared.loadTasksUser(userId: (self.user?.id)!) { (success, tasks) in
-                self.tasks = tasks!
-                self.tableView.isHidden = false
-                self.loader.stopAnimating()
-                self.tableView.reloadData()
+                if success {
+                    self.tasks = tasks
+                    self.tableView.isHidden = false
+                    self.loader.stopAnimating()
+                    self.tableView.reloadData()
+                }
+                
             }
         }
         else{
