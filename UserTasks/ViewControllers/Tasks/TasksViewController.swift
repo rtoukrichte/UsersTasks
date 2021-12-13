@@ -17,9 +17,8 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     @IBOutlet weak var loader: UIActivityIndicatorView!
     
-    let taskProvider = DataProvider()
-    var tasks : [Task]?
-    var user : Users.user?
+    var tasks : [TaskModel]?
+    var user : UserModel.user?
     
     // MARK: - View lifecycle
     override func viewDidLoad()
@@ -50,6 +49,8 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
         else{
             //self.tasks = taskProvider.tasks
+            let tasks = CoreDataManager.shared.fetchTasks(userId: (self.user?.id)!)
+            self.tasks = tasks
             self.loader.stopAnimating()
             self.tableView.isHidden = false
             self.tableView.reloadData()
@@ -58,7 +59,7 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
 
     // MARK: - Get object User
-    func userDetail(_ user: Users.user) {
+    func userDetail(_ user: UserModel.user) {
         self.user = user
     }
     

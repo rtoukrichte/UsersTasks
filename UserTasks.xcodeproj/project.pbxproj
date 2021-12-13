@@ -27,8 +27,6 @@
 		8D9F6B18229E91FA0073377B /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9F6B17229E91FA0073377B /* UserModel.swift */; };
 		8D9F6B1A229E922A0073377B /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9F6B19229E922A0073377B /* UserService.swift */; };
 		8DF4C577229EE3FC00627776 /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF4C576229EE3FC00627776 /* TaskModel.swift */; };
-		8DF4C579229FDBE700627776 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF4C578229FDBE700627776 /* DataProvider.swift */; };
-		8DF4C57B229FE76900627776 /* UserTasksProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF4C57A229FE76900627776 /* UserTasksProvider.swift */; };
 		A4578F8527633EEB009F5127 /* ReusableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4578F8427633EEB009F5127 /* ReusableCell.swift */; };
 		A4578F8727633F23009F5127 /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4578F8627633F23009F5127 /* NibLoadable.swift */; };
 		A4578F8C276358D0009F5127 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4578F8B276358D0009F5127 /* CoreDataManager.swift */; };
@@ -86,8 +84,6 @@
 		8D9F6B17229E91FA0073377B /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		8D9F6B19229E922A0073377B /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		8DF4C576229EE3FC00627776 /* TaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
-		8DF4C578229FDBE700627776 /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
-		8DF4C57A229FE76900627776 /* UserTasksProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTasksProvider.swift; sourceTree = "<group>"; };
 		A4578F8427633EEB009F5127 /* ReusableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableCell.swift; sourceTree = "<group>"; };
 		A4578F8627633F23009F5127 /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
 		A4578F8B276358D0009F5127 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -164,7 +160,6 @@
 				A4578F8427633EEB009F5127 /* ReusableCell.swift */,
 				A4578F8627633F23009F5127 /* NibLoadable.swift */,
 				A4578F9727637441009F5127 /* CoreData */,
-				8DF4C57F22A010EA00627776 /* DataProvider */,
 				8DF4C57E22A010B200627776 /* Model */,
 				8DF4C57D22A010AC00627776 /* Services */,
 				8DF4C57C22A010A900627776 /* ViewControllers */,
@@ -258,15 +253,6 @@
 				8DF4C576229EE3FC00627776 /* TaskModel.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		8DF4C57F22A010EA00627776 /* DataProvider */ = {
-			isa = PBXGroup;
-			children = (
-				8DF4C578229FDBE700627776 /* DataProvider.swift */,
-				8DF4C57A229FE76900627776 /* UserTasksProvider.swift */,
-			);
-			path = DataProvider;
 			sourceTree = "<group>";
 		};
 		A4578F9727637441009F5127 /* CoreData */ = {
@@ -517,14 +503,12 @@
 			files = (
 				8D9F6ABF229D63940073377B /* ViewController.swift in Sources */,
 				8D9F6AF4229D63DE0073377B /* UsersViewController.swift in Sources */,
-				8DF4C57B229FE76900627776 /* UserTasksProvider.swift in Sources */,
 				A4578F9627636246009F5127 /* UserTasks.xcdatamodeld in Sources */,
 				8D9F6B02229D63FF0073377B /* TasksViewController.swift in Sources */,
 				8D9F6ABD229D63940073377B /* AppDelegate.swift in Sources */,
 				8DF4C577229EE3FC00627776 /* TaskModel.swift in Sources */,
 				A4578F8C276358D0009F5127 /* CoreDataManager.swift in Sources */,
 				8D9F6B1A229E922A0073377B /* UserService.swift in Sources */,
-				8DF4C579229FDBE700627776 /* DataProvider.swift in Sources */,
 				8D9F6B13229D68390073377B /* TasksListCell.swift in Sources */,
 				A4578F8727633F23009F5127 /* NibLoadable.swift in Sources */,
 				8D9F6B0F229D68280073377B /* UsersListCell.swift in Sources */,

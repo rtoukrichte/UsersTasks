@@ -8,7 +8,7 @@
 import UIKit
 
 class TasksListCell: UITableViewCell, ConfigurableCell {
-    typealias T = Task
+    typealias T = TaskModel
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var viewStatus: UIView!
@@ -20,7 +20,7 @@ class TasksListCell: UITableViewCell, ConfigurableCell {
         self.viewStatus.layer.cornerRadius = CGFloat(self.viewStatus.bounds.width)/2.0
     }
     
-    func configureCell(with item: Task) {
+    func configureCell(with item: TaskModel) {
         self.titleLabel.text = item.title
         if item.status ?? false {
             viewStatus.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)

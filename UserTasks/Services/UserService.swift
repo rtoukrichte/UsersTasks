@@ -11,22 +11,16 @@ import Alamofire
 
 class UserService {
     
-    let userProvider: DataProvider
-    let userTasksProvider: UserTasksProvider = UserTasksProvider()
-    
     // MARK: - singleton instance
-    static let shared = UserService(userProvider: DataProvider())
+    static let shared = UserService()
     
-    private init(userProvider: DataProvider) {
-        self.userProvider = userProvider
-    }
+    private init() {}
     
     lazy var manager = NetworkReachabilityManager(host: "jsonplaceholder.typicode.com")
     
     // MARK: - Load Informations From users WebService
-    func loadUsers(completionHandler:@escaping (Bool, [Users.user]?) -> ()) {
+    func loadUsers(completionHandler:@escaping (Bool, [UserModel.user]?) -> ()) {
         
-        //var users = [Users.user]()
         Alamofire.request(Constants.usersListUrl, encoding: URLEncoding.default)
             .responseJSON { response in
                 
@@ -35,18 +29,11 @@ class UserService {
                     print("@@@@@@ case Success")
                     if let result = response.data {
                         do {
-                            let users = try JSONDecoder().decode([Users.user].self, from: result)
-                            print("array of users ==== ", users)
+                            let users = try JSONDecoder().decode([UserModel.user].self, from: result)
                             
-//                            self.userProvider.save(users: users, completion: { state in
-//                                guard state else {
-//                                    return
-//                                }
-//                                print("users saved successfully")
-//                            })
-//                            GlobalBackgroundQueue.async {
-//                                //CoreDataManager.shared.saveUsers(items: users)
-//                            }
+                            GlobalBackgroundQueue.async {
+                                CoreDataManager.shared.saveUsers(users)
+                            }
                             
                             completionHandler(true, users)
                         }
@@ -68,7 +55,7 @@ class UserService {
     }
     
     // 
-    func loadTasksUser(userId: Int, completionHandler:@escaping (Bool, [Task]?) -> ()) {
+    func loadTasksUser(userId: Int, completionHandler:@escaping (Bool, [TaskModel]?) -> ()) {
         
         let url = Constants.tasksListUrl + "\(userId)"
         
@@ -80,17 +67,12 @@ class UserService {
                     print("@@@@@@ case Success")
                     if let result = response.data {
                         do {
-                            let tasks = try JSONDecoder().decode([Task].self, from: result)
-                            print("array of users ==== ", tasks)
+                            let tasks = try JSONDecoder().decode([TaskModel].self, from: result)
+                            //print("array of users ==== ", tasks)
                             
-//                            self.userTasksProvider.saveTasks(userId: userId,tasks: tasks, completion: { state in
-//                                guard state else {
-//                                    return
-//                                }
-//                                print("users saved successfully")
-//                                completionHandler(true, tasks)
-//                                
-//                            })
+                            GlobalBackgroundQueue.async {
+                                CoreDataManager.shared.saveTasks(tasks, userId: userId)
+                            }
                             
                             completionHandler(true, tasks)
                         }

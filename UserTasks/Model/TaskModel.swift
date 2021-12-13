@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Task: Decodable {
+struct TaskModel: Decodable {
     let id: Int?
     let userId: Int?
     let title: String?
@@ -18,5 +18,12 @@ struct Task: Decodable {
         case userId
         case title
         case status = "completed"
+    }
+    
+    init(from task: Tasks) {
+        self.id = Int(task.id)
+        self.title = task.title
+        self.userId = Int(task.userId)
+        self.status = task.completed
     }
 }

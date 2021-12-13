@@ -16,8 +16,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var loader: UIActivityIndicatorView!
     @IBOutlet weak var lblError: UILabel!
     
-    let userProvider = DataProvider()
-    var users: [Users.user]?
+    var users: [UserModel.user]?
     
     // MARK: - View lifecycle
     override func viewDidLoad()
@@ -53,12 +52,13 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
         }
         else{
-            self.lblError.isHidden = false
+            let users = CoreDataManager.shared.fetchUsers()
+            //self.lblError.isHidden = false
             self.loader.stopAnimating()
-            self.tableView.isHidden = true
-//            self.users = userProvider.users
-//            self.tableView.reloadData()
-            self.lblError.text = "Please check your connection network"
+            self.tableView.isHidden = false
+            self.users = users
+            self.tableView.reloadData()
+            //self.lblError.text = "Please check your connection network"
         }
         
     }

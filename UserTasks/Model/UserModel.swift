@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Users: Decodable {
+struct UserModel: Decodable {
     let users: [user]?
 
     struct user: Decodable {
@@ -15,5 +15,24 @@ struct Users: Decodable {
         let name: String?
         let username: String?
         let email: String?
+        
+        
+        init(from user: User) {
+            self.id = Int(user.id)
+            self.name = user.name
+            self.username = user.username
+            self.email = user.email
+        }
+    }
+    
+    func initFromCoreData(users: [User]) -> [UserModel.user] {
+        var results = [UserModel.user]()
+        
+        for user in users {
+            let item = UserModel.user.init(from: user)
+            results.append(item)
+        }
+        
+        return results
     }
 }

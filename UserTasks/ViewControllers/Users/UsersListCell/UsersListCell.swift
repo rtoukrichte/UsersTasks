@@ -8,7 +8,7 @@
 import UIKit
 
 class UsersListCell: UITableViewCell, ConfigurableCell {
-    typealias T = Users.user
+    typealias T = UserModel.user
     
     // MARK: - Variables
     @IBOutlet weak var nameLabel: UILabel!
@@ -27,7 +27,7 @@ class UsersListCell: UITableViewCell, ConfigurableCell {
         self.selectionStyle = .none
     }
     
-    func configureCell(with item: Users.user) {
+    func configureCell(with item: UserModel.user) {
         self.nameLabel.text = item.name!
         self.usernameLabel.text = "@" + item.username!
         self.emailLabel.text = item.email!
