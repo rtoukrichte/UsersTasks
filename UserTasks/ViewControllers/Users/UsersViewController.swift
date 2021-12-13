@@ -52,13 +52,17 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
         }
         else{
-            let users = CoreDataManager.shared.fetchUsers()
-            //self.lblError.isHidden = false
             self.loader.stopAnimating()
-            self.tableView.isHidden = false
-            self.users = users
-            self.tableView.reloadData()
-            //self.lblError.text = "Please check your connection network"
+            let users = CoreDataManager.shared.fetchUsers()
+            if users?.count ?? 0 > 0 {
+                self.tableView.isHidden = false
+                self.users = users
+                self.tableView.reloadData()
+            }
+            else{
+                self.lblError.isHidden = false
+                self.lblError.text = "Please check your connection network"
+            }
         }
         
     }

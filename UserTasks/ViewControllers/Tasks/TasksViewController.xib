@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TasksViewController" customModule="UserTasks" customModuleProvider="target">
             <connections>
+                <outlet property="lblError" destination="WU8-dl-lsx" id="L6E-Ok-XxV"/>
                 <outlet property="loader" destination="6gE-zq-8iY" id="tbS-hM-7J0"/>
                 <outlet property="tableView" destination="2gt-ks-jkz" id="OWz-ho-m98"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Mdt-rz-QG4"/>
@@ -33,15 +34,23 @@
                     <rect key="frame" x="177.5" y="323.5" width="20" height="20"/>
                     <color key="color" systemColor="systemRedColor"/>
                 </activityIndicatorView>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WU8-dl-lsx">
+                    <rect key="frame" x="168" y="324.5" width="39.5" height="18.5"/>
+                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="16"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="2gt-ks-jkz" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="3V2-Me-isx"/>
                 <constraint firstItem="6gE-zq-8iY" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="3Vx-pE-kFr"/>
+                <constraint firstItem="WU8-dl-lsx" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="3oq-IT-nPd"/>
                 <constraint firstItem="2gt-ks-jkz" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="7Tv-RC-QnN"/>
                 <constraint firstItem="6gE-zq-8iY" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="9mt-6T-gly"/>
                 <constraint firstItem="2gt-ks-jkz" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="GXo-rE-ild"/>
+                <constraint firstItem="WU8-dl-lsx" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="vsB-BN-EXt"/>
                 <constraint firstItem="2gt-ks-jkz" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="vvY-mr-DTk"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>

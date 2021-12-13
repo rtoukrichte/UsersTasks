@@ -14,10 +14,10 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var viewHeader: UIView!
     @IBOutlet weak var lblDetail: UILabel!
-    
+    @IBOutlet weak var lblError: UILabel!
     @IBOutlet weak var loader: UIActivityIndicatorView!
     
-    var tasks : [TaskModel]?
+    var tasks: [TaskModel]?
     var user : UserModel.user?
     
     // MARK: - View lifecycle
@@ -44,16 +44,26 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     self.loader.stopAnimating()
                     self.tableView.reloadData()
                 }
-                
+                else{
+                    self.lblError.isHidden = false
+                    self.tableView.isHidden = true
+                    self.loader.stopAnimating()
+                    self.lblError.text = "Data not available, try later"
+                }
             }
         }
         else{
-            //self.tasks = taskProvider.tasks
-            let tasks = CoreDataManager.shared.fetchTasks(userId: (self.user?.id)!)
-            self.tasks = tasks
             self.loader.stopAnimating()
-            self.tableView.isHidden = false
-            self.tableView.reloadData()
+            let tasks = CoreDataManager.shared.fetchTasks(userId: (self.user?.id)!)
+            if tasks?.count ?? 0 > 0 {
+                self.tasks = tasks
+                self.tableView.isHidden = false
+                self.tableView.reloadData()
+            }
+            else{
+                self.lblError.isHidden = false
+                self.lblError.text = "Please check your connection network"
+            }
         }
         
     }
