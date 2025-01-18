@@ -28,14 +28,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         navigationController.navigationBar.isTranslucent = false
         navigationController.navigationBar.isHidden = false
-        navigationController.navigationBar.tintColor = UIColor.red
-        navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.red]
+        navigationController.navigationBar.tintColor = UIColor.white
+        navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         
-        navigationController.navigationBar.layer.masksToBounds = false
-        navigationController.navigationBar.layer.shadowColor = UIColor.lightGray.cgColor
-        navigationController.navigationBar.layer.shadowOpacity = 0.9
-        navigationController.navigationBar.layer.shadowOffset = CGSize(width: 0, height: 1.0)
-        navigationController.navigationBar.layer.shadowRadius = 4
+//        navigationController.navigationBar.layer.masksToBounds = false
+//        navigationController.navigationBar.layer.shadowColor = UIColor.lightGray.cgColor
+//        navigationController.navigationBar.layer.shadowOpacity = 0.9
+//        navigationController.navigationBar.layer.shadowOffset = CGSize(width: 0, height: 1.0)
+//        navigationController.navigationBar.layer.shadowRadius = 4
 
     }
     
@@ -59,7 +59,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        CoreDataManager.shared.save()
     }
 
 

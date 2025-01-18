@@ -16,7 +16,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var loader: UIActivityIndicatorView!
     @IBOutlet weak var lblError: UILabel!
     
-    var users: [UserModel.user]?
+    var users: Users?
     
     // MARK: - View lifecycle
     override func viewDidLoad()
@@ -37,34 +37,34 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func loadUsers() {
         self.loader.startAnimating()
         if UserService.shared.isNetworkReachable() {
-            UserService.shared.loadUsers { (success, users) in
-                guard success, users != nil else {
-                    self.lblError.isHidden = false
-                    self.tableView.isHidden = true
-                    self.loader.stopAnimating()
-                    self.lblError.text = "Data not available, try later"
-                    return
+            UserService.shared.fetchUsers { result in
+                switch result {
+                case .success(let users):
+                    
+                    DispatchQueue.main.async {
+                        self.users = users
+                        self.tableView.isHidden = false
+                        self.loader.stopAnimating()
+                        self.tableView.reloadData()
+                    }
+                    
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        self.lblError.isHidden = false
+                        self.tableView.isHidden = true
+                        self.loader.stopAnimating()
+                        self.lblError.text = "Data not available, try later"
+                    }
+                    
                 }
-                self.users = users
-                self.tableView.isHidden = false
-                self.loader.stopAnimating()
-                self.tableView.reloadData()
             }
         }
         else{
             self.loader.stopAnimating()
-            let users = CoreDataManager.shared.fetchUsers()
-            if users?.count ?? 0 > 0 {
-                self.tableView.isHidden = false
-                self.users = users
-                self.tableView.reloadData()
-            }
-            else{
-                self.lblError.isHidden = false
-                self.lblError.text = "Please check your connection network"
-            }
+            self.tableView.isHidden = true
+            self.lblError.isHidden = false
+            self.lblError.text = "Please check your connection network"
         }
-        
     }
 
     // MARK: - Table view data source

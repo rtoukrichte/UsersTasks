@@ -8,22 +8,17 @@
 import Foundation
 
 struct TaskModel: Decodable {
-    let id: Int?
-    let userId: Int?
+    let id: Int
+    let userID: Int
     let title: String?
     let status: Bool?
     
     enum CodingKeys: String, CodingKey {
         case id
-        case userId
+        case userID = "userId"
         case title
         case status = "completed"
     }
-    
-    init(from task: Tasks) {
-        self.id = Int(task.id)
-        self.title = task.title
-        self.userId = Int(task.userId)
-        self.status = task.completed
-    }
 }
+
+typealias Tasks = [TaskModel]

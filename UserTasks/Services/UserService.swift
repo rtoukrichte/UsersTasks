@@ -6,8 +6,12 @@
 //
 
 import Foundation
-import Alamofire
 
+enum DataError: Error {
+    case invalidData
+    case invalidResponse
+    case message(_ error: Error?)
+}
 
 class UserService {
     
@@ -16,85 +20,67 @@ class UserService {
     
     private init() {}
     
-    lazy var manager = NetworkReachabilityManager(host: "jsonplaceholder.typicode.com")
-    
     // MARK: - Load Informations From users WebService
-    func loadUsers(completionHandler:@escaping (Bool, [UserModel.user]?) -> ()) {
+    func fetchUsers(completion:@escaping (Result<Users, Error>) -> ()) {
         
-        Alamofire.request(Constants.usersListUrl, encoding: URLEncoding.default)
-            .responseJSON { response in
-                
-                switch response.result {
-                case .success:
-                    print("@@@@@@ case Success")
-                    if let result = response.data {
-                        do {
-                            let users = try JSONDecoder().decode([UserModel.user].self, from: result)
-                            
-                            GlobalBackgroundQueue.async {
-                                CoreDataManager.shared.saveUsers(users)
-                            }
-                            
-                            completionHandler(true, users)
-                        }
-                        catch let jsonErr {
-                            print("Error" , jsonErr)
-                            completionHandler(true, nil)
-                        }
-                        
-                    } else {
-                        completionHandler(false, nil)
-                    }
-                    break
-                case .failure(let error):
-                    print("@@@@@@@ Error == ", error.localizedDescription)
-                    completionHandler(false, nil)
-                    break
-                }
+        guard let url = URL(string: Constants.usersListUrl) else {
+            return
         }
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            
+            guard let data else {
+                completion(.failure(DataError.invalidData))
+                return
+            }
+            guard let response = response as? HTTPURLResponse, 200 ... 299  ~= response.statusCode else {
+                completion(.failure(DataError.invalidResponse))
+                return
+            }
+            
+            do {
+                let users = try JSONDecoder().decode(Users.self, from: data)
+                completion(.success(users))
+            }
+            catch {
+                completion(.failure(DataError.message(error)))
+            }
+            
+        }.resume()
     }
     
-    // 
-    func loadTasksUser(userId: Int, completionHandler:@escaping (Bool, [TaskModel]?) -> ()) {
+    
+    func fetchTasks(userId: String, completion:@escaping (Result<Tasks, Error>) -> ()) {
         
-        let url = Constants.tasksListUrl + "\(userId)"
+        guard let url = URL(string: Constants.tasksListUrl+userId) else {
+            return
+        }
         
-        Alamofire.request(url, encoding: URLEncoding.default)
-            .responseJSON { response in
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            
+            guard let data else {
+                completion(.failure(DataError.invalidData))
+                return
+            }
+            guard let response = response as? HTTPURLResponse, 200 ... 299  ~= response.statusCode else {
+                completion(.failure(DataError.invalidResponse))
+                return
+            }
+            
+            do {
+                let users = try JSONDecoder().decode(Tasks.self, from: data)
+                completion(.success(users))
+            }
+            catch {
+                completion(.failure(DataError.message(error)))
+            }
+            
+        }.resume()
+    }
 
-                switch response.result {
-                case .success:
-                    print("@@@@@@ case Success")
-                    if let result = response.data {
-                        do {
-                            let tasks = try JSONDecoder().decode([TaskModel].self, from: result)
-                            //print("array of users ==== ", tasks)
-                            
-                            GlobalBackgroundQueue.async {
-                                CoreDataManager.shared.saveTasks(tasks, userId: userId)
-                            }
-                            
-                            completionHandler(true, tasks)
-                        }
-                        catch let jsonErr {
-                            print("Error" , jsonErr)
-                            completionHandler(true, nil)
-                        }
-                        
-                    } else {
-                        completionHandler(false, nil)
-                    }
-                    break
-                case .failure(let error):
-                    print("@@@@@@@ Error == ", error.localizedDescription)
-                    completionHandler(false, nil)
-                    break
-                }
-        }
-    }
     
-    // MARK: - Network Reachability
+//    // MARK: - Network Reachability
     func isNetworkReachable() -> Bool {
-        return manager?.isReachable ?? false
+        return true
     }
 }

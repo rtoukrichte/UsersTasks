@@ -18,7 +18,7 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var loader: UIActivityIndicatorView!
     
     var tasks: [TaskModel]?
-    var user : UserModel.user?
+    var user : UserModel?
     
     // MARK: - View lifecycle
     override func viewDidLoad()
@@ -37,39 +37,45 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func loadUserTasks() {
         self.loader.startAnimating()
         if UserService.shared.isNetworkReachable() {
-            UserService.shared.loadTasksUser(userId: (self.user?.id)!) { (success, tasks) in
-                if success {
-                    self.tasks = tasks
-                    self.tableView.isHidden = false
-                    self.loader.stopAnimating()
-                    self.tableView.reloadData()
-                }
-                else{
-                    self.lblError.isHidden = false
-                    self.tableView.isHidden = true
-                    self.loader.stopAnimating()
-                    self.lblError.text = "Data not available, try later"
+            UserService.shared.fetchTasks(userId: String((self.user?.id)!)) { result in
+                
+                switch result {
+                case .success(let tasks):
+                    DispatchQueue.main.async {
+                        self.tasks = tasks
+                        self.tableView.isHidden = false
+                        self.loader.stopAnimating()
+                        self.tableView.reloadData()
+                    }
+                    
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        self.lblError.isHidden = false
+                        self.tableView.isHidden = true
+                        self.loader.stopAnimating()
+                        self.lblError.text = "Data not available, try later"
+                    }
                 }
             }
         }
-        else{
-            self.loader.stopAnimating()
-            let tasks = CoreDataManager.shared.fetchTasks(userId: (self.user?.id)!)
-            if tasks?.count ?? 0 > 0 {
-                self.tasks = tasks
-                self.tableView.isHidden = false
-                self.tableView.reloadData()
-            }
-            else{
-                self.lblError.isHidden = false
-                self.lblError.text = "Please check your connection network"
-            }
-        }
+//        else{
+//            self.loader.stopAnimating()
+//            let tasks = CoreDataManager.shared.fetchTasks(userId: (self.user?.id?.uuidString)!)
+//            if tasks?.count ?? 0 > 0 {
+//                self.tasks = tasks
+//                self.tableView.isHidden = false
+//                self.tableView.reloadData()
+//            }
+//            else{
+//                self.lblError.isHidden = false
+//                self.lblError.text = "Please check your connection network"
+//            }
+//        }
         
     }
 
     // MARK: - Get object User
-    func userDetail(_ user: UserModel.user) {
+    func userDetail(_ user: UserModel) {
         self.user = user
     }
     

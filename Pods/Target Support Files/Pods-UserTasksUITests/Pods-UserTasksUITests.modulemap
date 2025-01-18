@@ -1,6 +1,0 @@
-framework module Pods_UserTasksUITests {
-  umbrella header "Pods-UserTasksUITests-umbrella.h"
-
-  export *
-  module * { export * }
-}
