@@ -6,6 +6,12 @@
 # $ git config --global mergetool.keepBackup false
 *.orig
 
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
 # Created by git when using merge tools for conflicts
 *.BACKUP.*
 *.BASE.*
