@@ -7,9 +7,10 @@
 
 import Foundation
 
-enum DataError: Error {
+enum APIError: Error {
     case invalidData
     case invalidResponse
+    case badURL
     case message(_ error: Error?)
 }
 
@@ -24,26 +25,28 @@ class UserService {
     func fetchUsers(completion:@escaping (Result<Users, Error>) -> ()) {
         
         guard let url = URL(string: Constants.usersListUrl) else {
+            completion(.failure(APIError.badURL))
             return
         }
         
         URLSession.shared.dataTask(with: url) { data, response, error in
             
             guard let data else {
-                completion(.failure(DataError.invalidData))
+                completion(.failure(APIError.invalidData))
                 return
             }
             guard let response = response as? HTTPURLResponse, 200 ... 299  ~= response.statusCode else {
-                completion(.failure(DataError.invalidResponse))
+                completion(.failure(APIError.invalidResponse))
                 return
             }
             
             do {
                 let users = try JSONDecoder().decode(Users.self, from: data)
+                print(users)
                 completion(.success(users))
             }
             catch {
-                completion(.failure(DataError.message(error)))
+                completion(.failure(APIError.message(error)))
             }
             
         }.resume()
@@ -53,17 +56,18 @@ class UserService {
     func fetchTasks(userId: String, completion:@escaping (Result<Tasks, Error>) -> ()) {
         
         guard let url = URL(string: Constants.tasksListUrl+userId) else {
+            completion(.failure(APIError.badURL))
             return
         }
         
         URLSession.shared.dataTask(with: url) { data, response, error in
             
             guard let data else {
-                completion(.failure(DataError.invalidData))
+                completion(.failure(APIError.invalidData))
                 return
             }
             guard let response = response as? HTTPURLResponse, 200 ... 299  ~= response.statusCode else {
-                completion(.failure(DataError.invalidResponse))
+                completion(.failure(APIError.invalidResponse))
                 return
             }
             
@@ -72,7 +76,7 @@ class UserService {
                 completion(.success(users))
             }
             catch {
-                completion(.failure(DataError.message(error)))
+                completion(.failure(APIError.message(error)))
             }
             
         }.resume()

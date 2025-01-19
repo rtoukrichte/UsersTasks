@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TaskModel: Decodable {
+struct TaskModel: Decodable, Identifiable {
     let id: Int
     let userID: Int
     let title: String?
