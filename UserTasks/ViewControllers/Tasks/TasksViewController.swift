@@ -36,8 +36,8 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func loadUserTasks() {
         self.loader.startAnimating()
-        if UserService.shared.isNetworkReachable() {
-            UserService.shared.fetchTasks(userId: String((self.user?.id)!)) { result in
+        if ServiceManager.shared.isNetworkReachable() {
+            ServiceManager.shared.fetchTasks(userId: String((self.user?.id)!)) { result in
                 
                 switch result {
                 case .success(let tasks):

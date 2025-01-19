@@ -36,8 +36,8 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func loadUsers() {
         self.loader.startAnimating()
-        if UserService.shared.isNetworkReachable() {
-            UserService.shared.fetchUsers { result in
+        if ServiceManager.shared.isNetworkReachable() {
+            ServiceManager.shared.fetchUsers { result in
                 switch result {
                 case .success(let users):
                     

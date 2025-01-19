@@ -14,10 +14,10 @@ enum APIError: Error {
     case message(_ error: Error?)
 }
 
-class UserService {
+class ServiceManager {
     
     // MARK: - singleton instance
-    static let shared = UserService()
+    static let shared = ServiceManager()
     
     private init() {}
     
@@ -42,7 +42,7 @@ class UserService {
             
             do {
                 let users = try JSONDecoder().decode(Users.self, from: data)
-                print(users)
+                //debugPrint(users)
                 completion(.success(users))
             }
             catch {
@@ -85,6 +85,6 @@ class UserService {
     
 //    // MARK: - Network Reachability
     func isNetworkReachable() -> Bool {
-        return true
+        return Reachability.isConnectedToNetwork()
     }
 }
